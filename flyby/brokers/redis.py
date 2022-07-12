@@ -21,16 +21,16 @@ class RQueue(TaskQueue):
     def dequeue(self, queue) -> dict:
         resp = self.store.lpop(queue)
         result = resp.decode() if resp else "{}"
-        
+
         l = self.store.llen(queue)
-        if l==0:
+        if l == 0:
             self.store.lrem(self.all_queues, 1, queue)
-        
+
         return result
 
     def reset_queue(self, queue):
         self.store.delete(f"{self.namespace}:{queue}")
-        
+
     def get_queue_length(self, queue):
         return self.store.llen(queue)
 

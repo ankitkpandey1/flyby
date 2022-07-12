@@ -14,12 +14,8 @@ setup(
     python_requires=">=3.7",
     install_requires=dependencies,
     url="mammoth.io",
-    packages=[
-        "flyby",
-        "flyby.common",
-        "flyby.brokers"
-        ],
-    scripts=['bin/flyby'],
+    packages=["flyby", "flyby.common", "flyby.brokers"],
+    scripts=["bin/flyby"],
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

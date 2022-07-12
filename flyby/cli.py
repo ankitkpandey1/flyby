@@ -9,49 +9,44 @@ from time import sleep
 from flyby.common.logging import get_logger
 
 
-
 def main():
     args = make_argument_parser().parse_args()
     config_location = args.config
     task_module = args.module
     settings = Settings(_env_file=config_location, _env_file_encoding="utf-8")
-    log = get_logger(__name__,'main', settings.LOG_LOCATION)
-    try:    
+    log = get_logger(__name__, "main", settings.LOG_LOCATION)
+    try:
         importlib.import_module(task_module)
     except ImportError:
         log.error(f"Failed to import module {task_module}")
-    
-    
+
     REDIS_URL = (
         f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/{settings.REDIS_DB}"
     )
     task_queue = RQueue(url=REDIS_URL)
-    
+
     running_queues = []
-    threads=[]
-    
+    threads = []
+
     while True:
         all_queues = task_queue.get_all_active_queues()
         log.debug(all_queues)
         new_queues = list(set(all_queues) - set(running_queues))
-        log.info(f'new queue is {new_queues}')
+        log.info(f"new queue is {new_queues}")
         for queue in running_queues:
             if queue not in all_queues and queue not in new_queues:
-                log.info(f'dropping queue: {queue}')
+                log.info(f"dropping queue: {queue}")
                 running_queues.remove(queue)
-                
+
         for queue in new_queues:
             worker = Worker(queue, task_queue, args.module)
-            
+
             x = threading.Thread(target=worker.run, args=(), daemon=True)
             threads.append(x)
             x.start()
             running_queues.append(queue)
 
-            
         sleep(1)
-            
-        
 
 
 def make_argument_parser():
