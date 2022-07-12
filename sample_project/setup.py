@@ -4,7 +4,7 @@ from __future__ import annotations
 from distutils.core import setup
 
 setup(
-    name="sample_app_flyby",
+    name="sample_project",
     version="1.0",
     description="Sample App for flyby",
     author="Ankit Kumar Pandey",

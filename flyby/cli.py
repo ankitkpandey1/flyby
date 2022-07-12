@@ -39,12 +39,13 @@ def main():
                 running_queues.remove(queue)
 
         for queue in new_queues:
-            worker = Worker(queue, task_queue, args.module)
+            worker = Worker(queue, task_queue, args.module, log)
 
             x = threading.Thread(target=worker.run, args=(), daemon=True)
             threads.append(x)
             x.start()
             running_queues.append(queue)
+
 
         sleep(1)
 
