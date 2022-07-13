@@ -44,14 +44,14 @@ def main(args=None):
             worker = Worker(queue, task_queue, args.module, log)
 
             x = threading.Thread(target=worker.run, args=(), daemon=True)
-            active_threads[x] = queue
+            active_threads[queue] = x
             x.start()
             running_queues.append(queue)
 
-        for thread, queue in active_threads.items():
+        for queue, thread in active_threads.items():
             if not thread.is_alive():
                 running_queues.remove(queue)
-                del active_threads[thread]
+                del active_threads[queue]
         sleep(1)
 
     log.info("Stopping Flyby")
