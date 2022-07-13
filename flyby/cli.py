@@ -10,8 +10,8 @@ from flyby.common.logging import get_logger
 from flyby.common.signals import SignalHandler
 
 
-def main():
-    args = make_argument_parser().parse_args()
+def main(args=None):
+    args = args or make_argument_parser().parse_args()
     config_location = args.config
     task_module = args.module
     settings = Settings(_env_file=config_location, _env_file_encoding="utf-8")
@@ -56,16 +56,16 @@ def main():
 def make_argument_parser():
     parser = argparse.ArgumentParser(
         prog="flyby",
-        description="Run Flyby workers.",
+        description="Run Flyby workers",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "module",
-        help="the module to use",
+        help="the module to use. This module should contain task.py file and task_config dict defined",
     )
 
     parser.add_argument(
         "--config",
-        help="configuration to use",
+        help="configuration file containing env vars",
     )
     return parser
