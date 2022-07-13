@@ -44,9 +44,14 @@ def main(args=None):
             worker = Worker(queue, task_queue, args.module, log)
 
             x = threading.Thread(target=worker.run, args=(), daemon=True)
-            threads.append(x)
+            threads.append({x: queue})
             x.start()
             running_queues.append(queue)
+
+        for thread, queue in threads.items():
+            if not thread.is_alive():
+                running_queues.remove(queue)
+                threads.remove({thread: queue})
 
         sleep(1)
 
