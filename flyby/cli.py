@@ -48,11 +48,17 @@ def main(args=None):
             x.start()
             running_queues.append(queue)
 
+        sleep(1)
+        # cleanup dead threads
+        dead_threads = []
         for queue, thread in active_threads.items():
             if not thread.is_alive():
-                running_queues.remove(queue)
-                del active_threads[queue]
-        sleep(1)
+                dead_threads.append(queue)
+
+        for thread in dead_threads:
+            del active_threads[thread]
+            log.info(f"Running queue is {running_queues} and queue to drop is {thread}")
+            running_queues.remove(thread)
 
     log.info("Stopping Flyby")
 
