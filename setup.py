@@ -8,9 +8,9 @@ dependencies = ["redis>=2.0,<5.0", "pytest>=7.1.2", "pydantic[dotenv]>=1.9.1"]
 setup(
     name="flyby",
     version="1.0",
-    description="Provides async task processing",
+    description="Provides async task processing with dynamic queues",
     author="Ankit Kumar Pandey",
-    author_email="ankitpandey@mammoth.io",
+    author_email="ankitpandey1@gmail.com",
     python_requires=">=3.7",
     install_requires=dependencies,
     url="mammoth.io",
