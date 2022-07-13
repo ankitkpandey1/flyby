@@ -7,6 +7,7 @@ from flyby.common.const import Settings
 from flyby.worker import Worker
 from time import sleep
 from flyby.common.logging import get_logger
+from flyby.common.signals import SignalHandler
 
 
 def main():
@@ -27,12 +28,13 @@ def main():
 
     running_queues = []
     threads = []
-
-    while True:
+    log.info("Booting up Flyby")
+    sig = SignalHandler()
+    while not sig.exit_now:
         all_queues = task_queue.get_all_active_queues()
-        log.debug(all_queues)
         new_queues = list(set(all_queues) - set(running_queues))
-        log.info(f"new queue is {new_queues}")
+        if len(new_queues) > 0:
+            log.info(f"new queue is {new_queues}")
         for queue in running_queues:
             if queue not in all_queues and queue not in new_queues:
                 log.info(f"dropping queue: {queue}")
@@ -46,8 +48,9 @@ def main():
             x.start()
             running_queues.append(queue)
 
-
         sleep(1)
+
+    log.info("Stopping Flyby")
 
 
 def make_argument_parser():
