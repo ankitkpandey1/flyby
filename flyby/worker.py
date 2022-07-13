@@ -35,6 +35,4 @@ class Worker:
                 except Exception as e:
                     self.logger.error(str(e))
 
-            payload = self.task_queue.dequeue(self.queue)
-
         self.logger.info(f"stopping worker {self.queue}")
