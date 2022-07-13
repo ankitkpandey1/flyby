@@ -27,7 +27,7 @@ def main(args=None):
     task_queue = RQueue(url=REDIS_URL)
 
     running_queues = []
-    threads = []
+    active_threads = {}
     log.info("Booting up Flyby")
     sig = SignalHandler()
     while not sig.exit_now:
@@ -44,15 +44,14 @@ def main(args=None):
             worker = Worker(queue, task_queue, args.module, log)
 
             x = threading.Thread(target=worker.run, args=(), daemon=True)
-            threads.append({x: queue})
+            active_threads[x] = queue
             x.start()
             running_queues.append(queue)
 
-        for thread, queue in threads.items():
+        for thread, queue in active_threads.items():
             if not thread.is_alive():
                 running_queues.remove(queue)
-                threads.remove({thread: queue})
-
+                del active_threads[thread]
         sleep(1)
 
     log.info("Stopping Flyby")
