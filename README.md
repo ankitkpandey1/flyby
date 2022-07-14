@@ -1,5 +1,5 @@
 # Flyby
-Flyby is open source library which allows distributed task processing with dynamic queues.
+Flyby is an open source library which allows distributed task processing with dynamic queues.
 
 ## Dynamic Queues
 Consider following problem:
