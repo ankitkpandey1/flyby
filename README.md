@@ -16,7 +16,7 @@ We can note following points from above example:
 4. Finally, we need a queue. If n numbers of tasks are needed to performed, they should be performed sequentially.
 
 All of the above are supported by Flyby.
-1. Enqueue any data by enqueue(queue name, task: payload)
+1. Enqueue any operation by enqueue(queue name, task: payload)
 2. Map task with some function.
 3. Task will pick up (FIFO) from queue (as given in queue name) and process the payload.
 4. Queues will get created, appended and deleted (if empty), all handled by flyby runtime.
