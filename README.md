@@ -41,18 +41,18 @@ Use sample_project given in repo to get used to bits and bolts of Flyby.
 
 Enqueue task by:
 ```python
-    from flyby.brokers.redis import RQueue
+from flyby.brokers.redis import RQueue
 
-    task_queue = RQueue(REDIS_URL)
+task_queue = RQueue(REDIS_URL)
 
-    def api_function():
-        task_name = 'task'
-        task_args = 'hello_world'
-        param = {task_name: task_args}
-        # param should be in format: {task_name: task_args(json)}
-        # queue name can be anything
-        queue='writer_1'
-        task_queue.enqueue(queue=queue, param=json.dumps(param))
+def api_function():
+    task_name = 'task'
+    task_args = 'hello_world'
+    param = {task_name: task_args}
+    # param should be in format: {task_name: task_args(json)}
+    # queue name can be anything
+    queue='writer_1'
+    task_queue.enqueue(queue=queue, param=json.dumps(param))
 ```
 Create an env file:
 ```ini
@@ -65,17 +65,17 @@ LOG_LOCATION=flyby.log # log location
 
 Define a tasks.py which maps task_name with a corresponding function
 ```python
-   # some_module/tasks.py
-   def task(text_to_write: str):
-        file = open('myfile.txt', 'w')
-        # simply write input text to file
-        file.write(text_to_write)
-        file.close()
-    # map function with corresponding name which is used for enqueuing
-    # the task
-    task_config = {
-        'task': task
-    }
+# some_module/tasks.py
+def task(text_to_write: str):
+    file = open('myfile.txt', 'w')
+    # simply write input text to file
+    file.write(text_to_write)
+    file.close()
+# map function with corresponding name which is used for enqueuing
+# the task
+task_config = {
+    'task': task
+}
 
 ```
 
