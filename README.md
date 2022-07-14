@@ -1,9 +1,9 @@
 # Flyby
-Flyby is open source library which allows distributed task processing with dyanmic queues.
+Flyby is open source library which allows distributed task processing with dynamic queues.
 
 ## Dynamic Queues
 Consider following problem:
-There are ticket counters for fights A,B,C. Each ticket counters are exactly identical except that they serve ticket for given three fights.
+There are ticket counters for fights A,B,C. Each ticket counters are exactly identical except that they serve ticket for a given three flights.
 Ticket counter can be defined as function get_ticket(flight)->Ticket. Depending on flight param, it will return Ticket object.
 When counters are opened, there are followng peoples: 
 Person 1 wants ticket A, Person 2 wants ticket A, Person 3 wants ticket B and Person 4 wants ticket A again.
