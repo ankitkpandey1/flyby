@@ -69,11 +69,11 @@ def main(args=None):
         for queue in dead_queues:
             del active_threads[queue]
             log.info(f"Running queue is {running_queues} and queue to drop is {queue}")
-            
+
             # Ideally, queues get removed by themselves but in case concurrent system
             # we are forcing it so that new workers get launched
             if queue in running_queues:
-                running_queues.remove(thread)
+                running_queues.remove(queue)
 
     log.info("Stopping Flyby")
 
