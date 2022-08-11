@@ -55,5 +55,8 @@ class Worker:
                         )
                 except Exception as exp:
                     self.logger.error(f"Error while executing {func_name}: {str(exp)}")
+                    
+                    
+        self.broker.remove_queue(self.queue)
 
         self.logger.info(f"stopping worker {self.queue}")
