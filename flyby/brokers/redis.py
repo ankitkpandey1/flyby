@@ -1,3 +1,4 @@
+
 import redis
 from flyby.brokers.base import TaskQueue
 
@@ -54,12 +55,15 @@ class RQueue(TaskQueue):
 
         l = self.store.llen(queue)
         if l == 0:
-            self.store.lrem(self.all_queues, 1, queue)
+            self.remove_queue(queue)
 
         return result
 
     def reset_queue(self, queue: str) -> None:
         self.store.delete(f"{self.namespace}:{queue}")
+        
+    def remove_queue(self, queue: str) -> None:
+        self.store.lrem(self.all_queues, 1, queue)
 
     def get_queue_length(self, queue: str) -> int:
         """
