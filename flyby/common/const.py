@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     REDIS_PORT: int
     REDIS_DB: int
     LOG_LOCATION: str
+    NAMESPACE: str
 
     class Config:
         env_file = ".env"

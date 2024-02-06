@@ -29,7 +29,7 @@ def main(args=None):
     REDIS_URL = (
         f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/{settings.REDIS_DB}"
     )
-    broker = RQueue(url=REDIS_URL)
+    broker = RQueue(url=REDIS_URL, namespace=settings.NAMESPACE)
 
     running_queues = []
     active_threads = {}
