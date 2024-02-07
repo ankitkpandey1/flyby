@@ -43,7 +43,7 @@ Enqueue task by:
 ```python
 from flyby.brokers.redis import RQueue
 
-task_queue = RQueue(REDIS_URL)
+task_queue = RQueue(REDIS_URL, namespace)
 
 def api_function():
     task_name = 'task'
