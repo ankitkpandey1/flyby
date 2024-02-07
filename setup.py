@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from distutils.core import setup
 
-dependencies = ["redis>=2.0,<5.0", "pytest>=7.1.2", "pydantic-settings==2.0.3"]
+dependencies = ["redis>=2.0,<5.0", "pytest>=7.1.2", "pydantic-settings==2.1.0"]
 
 setup(
     name="flyby",
